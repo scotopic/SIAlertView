@@ -10,8 +10,8 @@
 
 @interface UIColor (SIAlertView)
 
-- (UIColor *)lightenColorWithValue:(CGFloat)value;
-- (UIColor *)darkenColorWithValue:(CGFloat)value;
-- (BOOL)isLightColor;
+- (UIColor *)si_lightenColorWithValue:(CGFloat)value;
+- (UIColor *)si_darkenColorWithValue:(CGFloat)value;
+- (BOOL)si_isLightColor;
 
 @end

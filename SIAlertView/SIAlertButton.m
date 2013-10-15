@@ -14,7 +14,6 @@
 @property (strong, nonatomic) UIColor *color;
 
 + (UIColor *)colorForButtonType:(SIAlertViewButtonType)aType;
-- (void)configureForDefaultType:(SIAlertViewButtonType)aType;
 
 @end
 
@@ -25,6 +24,7 @@
 @synthesize color;
 
 #pragma mark - Initialization
+
 + (SIAlertButton *)alertButtonWithTitle:(NSString *)aTitle
                                    type:(SIAlertViewButtonType)aType
                                  action:(SIAlertViewHandler)anAction
@@ -37,17 +37,7 @@
 	button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     button.titleLabel.font = aFont;
 	[button setTitle:aTitle forState:UIControlStateNormal];
-    
-    if(aType == SIAlertViewButtonTypeOKDefault
-       || aType == SIAlertViewButtonTypeCancelDefault
-       || aType == SIAlertViewButtonTypeDestructiveDefault) {
-        
-        [button configureForDefaultType:aType];
-    }
-    else {
-        button.color = [SIAlertButton colorForButtonType:aType];
-    }
-    
+    button.color = [SIAlertButton colorForButtonType:aType];
     return button;
 }
 
@@ -68,11 +58,12 @@
 }
 
 #pragma mark - Setters
+
 - (void)setColor:(UIColor *)newColor
 {
     color = newColor;
     
-    if([newColor isLightColor]) {
+    if([newColor si_isLightColor]) {
         [self setTitleColor:[UIColor colorWithWhite:0.35f alpha:1.0f] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor colorWithWhite:0.35f alpha:0.8f] forState:UIControlStateHighlighted];
     }
@@ -124,43 +115,8 @@
     }
 }
 
-- (void)configureForDefaultType:(SIAlertViewButtonType)aType
-{
-    UIImage *normalImage = nil;
-    UIImage *highlightedImage = nil;
-    
-    switch (aType) {
-        case SIAlertViewButtonTypeCancelDefault:
-            normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-cancel"];
-            highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-cancel-d"];
-            [self setTitleColor:[UIColor colorWithWhite:0.3f alpha:1.0f] forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor colorWithWhite:0.3f alpha:0.8f] forState:UIControlStateHighlighted];
-            break;
-        case SIAlertViewButtonTypeDestructiveDefault:
-            normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-destructive"];
-            highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-destructive-d"];
-            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.8f] forState:UIControlStateHighlighted];
-            break;
-        case SIAlertViewButtonTypeOKDefault:
-        default:
-            normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default"];
-            highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default-d"];
-            [self setTitleColor:[UIColor colorWithWhite:0.4f alpha:1.0f] forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor colorWithWhite:0.4f alpha:0.8f] forState:UIControlStateHighlighted];
-            break;
-    }
-    
-    CGFloat hInset = floorf(normalImage.size.width / 2.0f);
-    CGFloat vInset = floorf(normalImage.size.height / 2.0f);
-    UIEdgeInsets insets = UIEdgeInsetsMake(vInset, hInset, vInset, hInset);
-    normalImage = [normalImage resizableImageWithCapInsets:insets];
-    highlightedImage = [highlightedImage resizableImageWithCapInsets:insets];
-    [self setBackgroundImage:normalImage forState:UIControlStateNormal];
-    [self setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
-}
-
 #pragma mark - UIButton
+
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
@@ -168,6 +124,7 @@
 }
 
 #pragma mark - Drawing
+
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
@@ -175,10 +132,10 @@
     
     CGContextSaveGState(context);
     
-    UIColor *fill = (!self.highlighted) ? self.color : [self.color darkenColorWithValue:0.06f];
+    UIColor *fill = (!self.highlighted) ? self.color : [self.color si_darkenColorWithValue:0.06f];
     CGContextSetFillColorWithColor(context, fill.CGColor);
     
-    UIColor *border = (!self.highlighted) ? [self.color darkenColorWithValue:0.06f] : [self.color darkenColorWithValue:0.12f];
+    UIColor *border = (!self.highlighted) ? [self.color si_darkenColorWithValue:0.06f] : [self.color si_darkenColorWithValue:0.12f];
     CGContextSetStrokeColorWithColor(context, border.CGColor);
     
     CGContextSetLineWidth(context, 1.0f);

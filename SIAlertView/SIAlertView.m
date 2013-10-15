@@ -63,9 +63,10 @@ static SIAlertView *__si_alert_current_view;
 @implementation SIAlertView
 
 #pragma mark - Initialization
+
 + (void)initialize
 {
-    if (self != [SIAlertView class])
+    if(self != [SIAlertView class])
         return;
     
     SIAlertView *appearance = [self appearance];
@@ -89,7 +90,7 @@ static SIAlertView *__si_alert_current_view;
 	if (self) {
 		_title = title;
         _message = message;
-		self.buttons = [[NSMutableArray alloc] init];
+		_buttons = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -98,23 +99,24 @@ static SIAlertView *__si_alert_current_view;
 {
     [self teardown];
     
-    self.buttons = nil;
-    self.title = nil;
-    self.message = nil;
+    _buttons = nil;
+    _title = nil;
+    _message = nil;
     
-    self.willShowHandler = nil;
-    self.didShowHandler = nil;
-    self.willDismissHandler = nil;
-    self.didDismissHandler = nil;
+    _willShowHandler = nil;
+    _didShowHandler = nil;
+    _willDismissHandler = nil;
+    _didDismissHandler = nil;
     
-    self.titleColor = nil;
-    self.messageColor = nil;
-    self.titleFont = nil;
-    self.messageFont = nil;
-    self.buttonFont = nil;
+    _titleColor = nil;
+    _messageColor = nil;
+    _titleFont = nil;
+    _messageFont = nil;
+    _buttonFont = nil;
 }
 
 #pragma mark - Class methods
+
 + (NSMutableArray *)sharedQueue
 {
     if (!__si_alert_queue) {
@@ -175,6 +177,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Setters
+
 - (void)setTitle:(NSString *)title
 {
     _title = title;
@@ -188,6 +191,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Public
+
 - (void)addAlertButtonWithTitle:(NSString *)title
                            type:(SIAlertViewButtonType)type
                         handler:(SIAlertViewHandler)handler
@@ -361,6 +365,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Transitions
+
 - (void)transitionInCompletion:(void(^)(void))completion
 {
     switch (self.transitionStyle) {
@@ -536,6 +541,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Layout
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -604,7 +610,7 @@ static SIAlertView *__si_alert_current_view;
                     if (i == self.buttons.count - 1) {
                         id last = [self.buttons lastObject];
                         
-                        if(((SIAlertButton *)last).type == SIAlertViewButtonTypeCancelDefault) {
+                        if(((SIAlertButton *)last).type == SIAlertViewButtonTypeCancel) {
                             CGRect rect = button.frame;
                             rect.origin.y += CANCEL_BUTTON_PADDING_TOP;
                             button.frame = rect;
@@ -646,7 +652,7 @@ static SIAlertView *__si_alert_current_view;
             if (self.buttons.count > 2) {
                 id last = [self.buttons lastObject];
                 
-                if(((SIAlertButton *)last).type == SIAlertViewButtonTypeCancelDefault) {
+                if(((SIAlertButton *)last).type == SIAlertViewButtonTypeCancel) {
                     height += CANCEL_BUTTON_PADDING_TOP;
                 }
             }
@@ -683,6 +689,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Setup
+
 - (void)setup
 {
     [self setupContainerView];
@@ -765,6 +772,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Actions
+
 - (void)buttonPressed:(UIButton *)button
 {
 	[SIAlertView setAnimating:YES]; // set this flag to YES in order to prevent showing another alert in action block
@@ -776,7 +784,8 @@ static SIAlertView *__si_alert_current_view;
 	[self dismissAnimated:YES];
 }
 
-#pragma mark - CAAnimation delegate
+#pragma mark - Animation delegate
+
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     void(^completion)(void) = [anim valueForKey:@"handler"];
@@ -786,6 +795,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - UIAppearance setters
+
 - (void)setTitleFont:(UIFont *)titleFont
 {
     if (_titleFont == titleFont) {

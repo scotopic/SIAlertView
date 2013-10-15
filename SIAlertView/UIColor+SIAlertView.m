@@ -10,7 +10,7 @@
 
 @implementation UIColor (SIAlertView)
 
-- (UIColor *)lightenColorWithValue:(CGFloat)value
+- (UIColor *)si_lightenColorWithValue:(CGFloat)value
 {
     int totalComponents = CGColorGetNumberOfComponents(self.CGColor);
     BOOL isGreyscale = (totalComponents == 2) ? YES : NO;
@@ -41,7 +41,7 @@
     return retColor;
 }
 
-- (UIColor *)darkenColorWithValue:(CGFloat)value
+- (UIColor *)si_darkenColorWithValue:(CGFloat)value
 {
     int totalComponents = CGColorGetNumberOfComponents(self.CGColor);
     BOOL isGreyscale = (totalComponents == 2) ? YES : NO;
@@ -72,7 +72,7 @@
     return retColor;
 }
 
-- (BOOL)isLightColor
+- (BOOL)si_isLightColor
 {
     int totalComponents = CGColorGetNumberOfComponents(self.CGColor);
     BOOL isGreyscale = (totalComponents == 2) ? YES : NO;

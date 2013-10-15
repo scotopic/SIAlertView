@@ -19,11 +19,12 @@
 @implementation SIAlertBackgroundWindow
 
 #pragma mark - Initialization
+
 - (id)initWithFrame:(CGRect)frame andStyle:(SIAlertViewBackgroundStyle)style
 {
     self = [super initWithFrame:frame];
     if(self) {
-        self.style = style;
+        _style = style;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.opaque = NO;
         self.windowLevel = UIWindowLevelAlert;
@@ -32,6 +33,7 @@
 }
 
 #pragma mark - Drawing
+
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
