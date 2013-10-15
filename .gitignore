@@ -17,7 +17,7 @@ DerivedData
 .idea/
 *.hmap
 
-*/xcshareddata/*
+SIAlertViewExample/SIAlertViewExample.xcodeproj/project.xcworkspace/xcshareddata/
 
 #Pods
 Pods
