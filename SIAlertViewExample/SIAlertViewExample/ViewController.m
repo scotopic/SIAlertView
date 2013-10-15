@@ -26,6 +26,11 @@
     [[SIAlertView appearance] setShadowRadius:20];
 }
 
+- (void)customButtonAction:(UIButton *)sender
+{
+    NSLog(@"PRESSED CUSTOM BUTTON");
+}
+
 #pragma mark - Actions
 
 - (IBAction)alert1:(id)sender
@@ -94,7 +99,13 @@
 {
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Attention!"
                                                         message:@"This is a custom alert where the buttons are drawn via CoreGraphics. It looks really nice, huh?"];
-    
+
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [btn setTitle:@"Custom Button" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(customButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+
+    [alertView addCustomButton:btn];
+
     [alertView addAlertButtonWithTitle:@"Cancel"
                                   type:SIAlertViewButtonTypeDanger
                                handler:^(SIAlertView *alertView) {
@@ -105,7 +116,7 @@
                                handler:^(SIAlertView *alertView) {
                                    NSLog(@"OK Clicked");
                                }];
-    
+
     alertView.titleColor = [UIColor colorWithHue:3.0f/360.0f saturation:0.76f brightness:0.88f alpha:1.0f];
     alertView.messageColor = [UIColor colorWithWhite:0.35f alpha:0.8f];
     alertView.messageFont = [UIFont systemFontOfSize:16.0f];

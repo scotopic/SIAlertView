@@ -54,6 +54,8 @@ typedef NS_ENUM(NSInteger, SIAlertViewTransitionStyle) {
 
 - (id)initWithTitle:(NSString *)title message:(NSString *)message;
 
+- (void)addCustomButton:(UIButton *)button;
+
 - (void)addAlertButtonWithTitle:(NSString *)title
                            type:(SIAlertViewButtonType)type
                         handler:(SIAlertViewHandler)handler;

@@ -192,6 +192,15 @@ static SIAlertView *__si_alert_current_view;
 
 #pragma mark - Public
 
+- (void)addCustomButton:(UIButton *)button
+{
+    [button addTarget:self
+               action:@selector(buttonPressed:)
+     forControlEvents:UIControlEventTouchUpInside];
+
+    [self.buttons addObject:button];
+}
+
 - (void)addAlertButtonWithTitle:(NSString *)title
                            type:(SIAlertViewButtonType)type
                         handler:(SIAlertViewHandler)handler
@@ -201,12 +210,7 @@ static SIAlertView *__si_alert_current_view;
                                                       action:handler
                                                         font:self.buttonFont
                                                          tag:self.buttons.count];
-    
-    [btn addTarget:self
-            action:@selector(buttonPressed:)
-  forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.buttons addObject:btn];
+    [self addCustomButton:btn];
 }
 
 - (void)addAlertButtonWithTitle:(NSString *)title
@@ -218,12 +222,7 @@ static SIAlertView *__si_alert_current_view;
                                                       action:handler
                                                         font:self.buttonFont
                                                          tag:self.buttons.count];
-    
-    [btn addTarget:self
-            action:@selector(buttonPressed:)
-  forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.buttons addObject:btn];
+    [self addCustomButton:btn];
 }
 
 - (void)show
@@ -776,10 +775,13 @@ static SIAlertView *__si_alert_current_view;
 - (void)buttonPressed:(UIButton *)button
 {
 	[SIAlertView setAnimating:YES]; // set this flag to YES in order to prevent showing another alert in action block
-    
-    SIAlertButton *btn = (SIAlertButton *)button;
-    if(btn.action)
-        btn.action(self);
+
+    if([button isKindOfClass:[SIAlertButton class]]) {
+        SIAlertButton *btn = (SIAlertButton *)button;
+        if(btn.action) {
+            btn.action(self);
+        }
+    }
     
 	[self dismissAnimated:YES];
 }
