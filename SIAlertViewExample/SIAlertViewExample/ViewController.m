@@ -99,7 +99,10 @@
 {
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Attention!"
                                                         message:@"This is a custom alert where the buttons are drawn via CoreGraphics. It looks really nice, huh?"];
-
+    
+    alertView.backgroundStyle = SIAlertViewBackgroundStyleNone;
+    alertView.alertBackgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.9f];
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btn setTitle:@"Custom Button" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(customButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -118,7 +121,7 @@
                                }];
 
     alertView.titleColor = [UIColor colorWithHue:3.0f/360.0f saturation:0.76f brightness:0.88f alpha:1.0f];
-    alertView.messageColor = [UIColor colorWithWhite:0.35f alpha:0.8f];
+    alertView.messageColor = [UIColor colorWithWhite:0.8f alpha:0.8f];
     alertView.messageFont = [UIFont systemFontOfSize:16.0f];
     alertView.cornerRadius = 5.0f;
     alertView.buttonFont = [UIFont boldSystemFontOfSize:16.0f];

@@ -59,6 +59,12 @@
             CGContextFillRect(context, self.bounds);
             break;
         }
+        case SIAlertViewBackgroundStyleNone:
+        {
+            [[UIColor clearColor] set];
+            CGContextFillRect(context, self.bounds);
+            break;
+        }
     }
 }
 

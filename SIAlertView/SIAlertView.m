@@ -77,6 +77,7 @@ static SIAlertView *__si_alert_current_view;
     appearance.buttonFont = [UIFont systemFontOfSize:[UIFont buttonFontSize]];
     appearance.cornerRadius = 2;
     appearance.shadowRadius = 8;
+    appearance.alertBackgroundColor = [UIColor whiteColor];
 }
 
 - (id)init
@@ -113,6 +114,7 @@ static SIAlertView *__si_alert_current_view;
     _titleFont = nil;
     _messageFont = nil;
     _buttonFont = nil;
+    _alertBackgroundColor = nil;
 }
 
 #pragma mark - Class methods
@@ -715,7 +717,7 @@ static SIAlertView *__si_alert_current_view;
 - (void)setupContainerView
 {
     self.containerView = [[UIView alloc] initWithFrame:self.bounds];
-    self.containerView.backgroundColor = [UIColor whiteColor];
+    self.containerView.backgroundColor = self.alertBackgroundColor;
     self.containerView.layer.cornerRadius = self.cornerRadius;
     self.containerView.layer.shadowOffset = CGSizeZero;
     self.containerView.layer.shadowRadius = self.shadowRadius;
@@ -863,6 +865,15 @@ static SIAlertView *__si_alert_current_view;
     }
     _shadowRadius = shadowRadius;
     self.containerView.layer.shadowRadius = shadowRadius;
+}
+
+- (void)setAlertBackgroundColor:(UIColor *)backgroundColor
+{
+    if (_alertBackgroundColor == backgroundColor) {
+        return;
+    }
+    _alertBackgroundColor = backgroundColor;
+    self.containerView.backgroundColor = backgroundColor;
 }
 
 @end

@@ -11,6 +11,7 @@
 typedef NS_ENUM(NSInteger, SIAlertViewBackgroundStyle) {
     SIAlertViewBackgroundStyleGradient = 0,
     SIAlertViewBackgroundStyleSolid,
+    SIAlertViewBackgroundStyleNone,
 };
 
 
